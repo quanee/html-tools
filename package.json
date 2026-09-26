@@ -1,0 +1,22 @@
+{
+  "name": "pocket-dev-tools",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun scripts/dev.ts",
+    "build": "bun scripts/build.ts",
+    "typecheck": "tsc --noEmit",
+    "test": "bun test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "@types/bun": "1.3.13",
+    "typescript": "5.9.3",
+    "prettier": "3.6.2"
+  },
+  "engines": {
+    "bun": ">=1.3.13"
+  }
+}
