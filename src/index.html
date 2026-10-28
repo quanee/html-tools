@@ -107,6 +107,8 @@
                 <button class="button primary" data-action="format">
                   <svg class="icon"><use href="#icon-spark" /></svg>格式化</button
                 ><button class="button" data-action="compact">压缩</button
+                ><button class="button" data-action="escape">转义</button
+                ><button class="button" data-action="unescape">去转义</button
                 ><span class="toolbar-separator"></span
                 ><label class="inline-label" for="json-indent">缩进</label
                 ><select id="json-indent">
@@ -145,6 +147,10 @@
             <div class="note">
               <span class="note-label">使用提示</span>
               <p>格式化只调整排版，不改变数字、转义或键顺序。支持大整数；不支持注释和尾随逗号。</p>
+              <p>
+                转义支持 JSON
+                和普通文本，结果不带外层双引号；去转义兼容带或不带外层双引号的输入，每次只还原一层，不自动格式化。
+              </p>
             </div>
           </section>
 

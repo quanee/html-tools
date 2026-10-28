@@ -1,6 +1,6 @@
 import { element, onAction } from "../../ui/dom";
 import { bindTextTool } from "../../ui/text-tool";
-import { transformJson, type JsonIndent } from "./convert";
+import { escapeJson, transformJson, unescapeJson, type JsonIndent } from "./convert";
 
 export function mountJson(root: HTMLElement): void {
   const editor = bindTextTool(root);
@@ -14,6 +14,8 @@ export function mountJson(root: HTMLElement): void {
   onAction(root, "compact", () =>
     editor.run((value) => transformJson(value, "compact"), "压缩完成，已移除多余空白。"),
   );
+  onAction(root, "escape", () => editor.run(escapeJson, "转义完成，结果不含外层双引号。"));
+  onAction(root, "unescape", () => editor.run(unescapeJson, "去转义完成，已还原一层转义。"));
   onAction(root, "sample", () =>
     editor.setContent(
       '{"name":"开发者工具集","ready":true,"tools":["JSON","时间戳","Base64"],"id":9007199254740993,"meta":{"version":"1.0","note":"你好，世界 👋"}}',
