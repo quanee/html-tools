@@ -4,6 +4,17 @@ export const root = join(import.meta.dir, "..");
 
 /** Keep build output in memory; only the production entry writes the final HTML. */
 export async function buildPage(minify = true): Promise<string> {
+  const worker = await Bun.build({
+    entrypoints: [join(root, "src/tools/pdf/worker.ts")],
+    target: "browser",
+    format: "iife",
+    minify,
+    splitting: false,
+    sourcemap: "none",
+  });
+  if (!worker.success) throw new Error(worker.logs.map(String).join("\n"));
+  if (worker.outputs.length !== 1) throw new Error("Worker 必须打包为单个内联脚本。");
+  const workerSource = await worker.outputs[0]!.text();
   const [javascript, css] = await Promise.all([
     Bun.build({
       entrypoints: [join(root, "src/main.ts")],
@@ -11,6 +22,7 @@ export async function buildPage(minify = true): Promise<string> {
       format: "iife",
       minify,
       splitting: false,
+      define: { __PDF_WORKER_SOURCE__: JSON.stringify(workerSource) },
       sourcemap: "none",
     }),
     Bun.build({

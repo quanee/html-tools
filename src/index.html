@@ -6,7 +6,7 @@
     <meta name="color-scheme" content="light" />
     <meta
       name="description"
-      content="轻巧、离线的开发者工具集。JSON 格式化、时间戳转换、Base64 编解码与文本对比，在你的浏览器中完成。"
+      content="轻巧、离线的开发者工具集。JSON 格式化、时间戳转换、Base64 编解码、文本对比与 Unicode 编解码，在你的浏览器中完成。"
     />
     <link
       rel="icon"
@@ -17,6 +17,9 @@
   </head>
   <body>
     <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <symbol id="icon-pdf" viewBox="0 0 24 24">
+        <path d="M14 2H5v20h14V7l-5-5Zm0 0v5h5M8 12h8m-8 4h3m2 0h3" />
+      </symbol>
       <symbol id="icon-json" viewBox="0 0 24 24">
         <path d="M8 4H6v6l-2 2 2 2v6h2m8-16h2v6l2 2-2 2v6h-2M10 12h.01M14 12h.01" />
       </symbol>
@@ -34,6 +37,9 @@
       <symbol id="icon-diff" viewBox="0 0 24 24">
         <path d="M12 3v18M3 8h6m-3 7v6m-3-3h6M16 6h5m-5 6h5m-5 6h5" />
       </symbol>
+      <symbol id="icon-unicode" viewBox="0 0 24 24">
+        <path d="M4 5v9a5 5 0 0 0 10 0V5m2 3h6m-3-3v6" />
+      </symbol>
       <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-5-5 5 5-5 5" /></symbol>
       <symbol id="icon-shield" viewBox="0 0 24 24">
         <path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6l8-3Z" />
@@ -42,36 +48,54 @@
       <symbol id="icon-spark" viewBox="0 0 24 24">
         <path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z" />
       </symbol>
+      <symbol id="icon-expand" viewBox="0 0 24 24">
+        <path d="M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5" />
+      </symbol>
+      <symbol id="icon-restore" viewBox="0 0 24 24">
+        <path d="M3 8h5V3m8 0v5h5M8 21v-5H3m18 0h-5v5" />
+      </symbol>
+      <symbol id="icon-sidebar" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="16" rx="2" />
+        <path d="M9 4v16m7-11-3 3 3 3" />
+      </symbol>
     </svg>
     <a class="skip-link" href="#workspace">跳转至工具区域</a>
     <div class="app-shell">
-      <aside class="sidebar" aria-label="工具导航">
+      <aside class="sidebar" id="sidebar" aria-label="工具导航">
         <div class="brand">
           <span class="brand-mark"
             ><svg class="icon"><use href="#icon-code" /></svg
           ></span>
-          <div>
+          <div class="brand-text">
             <strong>拾用<span class="brand-dot">.</span></strong
             ><span class="brand-subtitle">开发者的随身工具箱</span>
           </div>
         </div>
         <div class="nav-label">工作台 <span>WORKSPACE</span></div>
         <nav class="tool-nav" aria-label="选择工具">
-          <a href="#json" aria-current="page"
+          <a href="#json" aria-current="page" aria-label="JSON 工具" title="JSON 工具"
             ><svg class="icon"><use href="#icon-json" /></svg><span>JSON 工具</span
             ><span class="nav-index">01</span></a
           >
-          <a href="#timestamp"
+          <a href="#timestamp" aria-label="时间戳转换" title="时间戳转换"
             ><svg class="icon"><use href="#icon-clock" /></svg><span>时间戳转换</span
             ><span class="nav-index">02</span></a
           >
-          <a href="#base64"
+          <a href="#base64" aria-label="Base64 编解码" title="Base64 编解码"
             ><svg class="icon"><use href="#icon-code" /></svg><span>Base64 编解码</span
             ><span class="nav-index">03</span></a
           >
-          <a href="#diff"
+          <a href="#diff" aria-label="文本对比" title="文本对比"
             ><svg class="icon"><use href="#icon-diff" /></svg><span>文本对比</span
             ><span class="nav-index">04</span></a
+          >
+          <a href="#unicode" aria-label="Unicode 编解码" title="Unicode 编解码"
+            ><svg class="icon"><use href="#icon-unicode" /></svg><span>Unicode 编解码</span
+            ><span class="nav-index">05</span></a
+          >
+          <a href="#pdf" aria-label="PDF 分割" title="PDF 分割"
+            ><svg class="icon"><use href="#icon-pdf" /></svg><span>PDF 分割</span
+            ><span class="nav-index">06</span></a
           >
         </nav>
         <div class="sidebar-bottom">
@@ -84,87 +108,93 @@
       </aside>
       <div class="main-shell">
         <header class="topbar">
-          <div class="breadcrumb">
-            <span>工具集</span><span class="breadcrumb-divider">/</span
-            ><span id="breadcrumb-current">JSON 工具</span>
+          <div class="topbar-start">
+            <button
+              type="button"
+              class="sidebar-toggle"
+              id="sidebar-toggle"
+              aria-label="折叠导航"
+              title="折叠导航"
+              aria-controls="sidebar"
+              aria-expanded="true"
+            >
+              <svg class="icon" aria-hidden="true"><use href="#icon-sidebar" /></svg>
+            </button>
+            <div class="breadcrumb">
+              <span>工具集</span><span class="breadcrumb-divider">/</span>
+              <h1 id="breadcrumb-current">JSON 工具</h1>
+            </div>
           </div>
           <span class="local-badge"><span class="status-dot"></span> 本地运行</span>
         </header>
         <main id="workspace" tabindex="-1">
-          <section id="panel-json" aria-labelledby="json-title">
-            <div class="page-heading">
-              <div>
-                <div class="eyebrow">01 <span>/</span> STRUCTURED DATA</div>
-                <h1 id="json-title">JSON 工具<span class="heading-dot">.</span></h1>
-                <p>整理结构，专注数据。格式化与压缩，一步完成。</p>
+          <section id="panel-json" class="editor-panel" aria-labelledby="breadcrumb-current">
+            <div class="text-workspace" id="json-workspace" data-fullscreen-label="JSON 编辑器">
+              <div class="toolbar">
+                <div class="toolbar-group">
+                  <button class="button primary" data-action="format">
+                    <svg class="icon"><use href="#icon-spark" /></svg>格式化</button
+                  ><button class="button" data-action="compact">压缩</button
+                  ><button class="button" data-action="escape">转义</button
+                  ><button class="button" data-action="unescape">去转义</button
+                  ><span class="toolbar-separator"></span
+                  ><label class="inline-label" for="json-indent">缩进</label
+                  ><select id="json-indent">
+                    <option value="2">2 个空格</option>
+                    <option value="4">4 个空格</option>
+                    <option value="tab">Tab</option>
+                  </select>
+                </div>
+                <div class="toolbar-group">
+                  <button class="button text-button" data-action="sample">载入示例</button
+                  ><button class="button text-button muted" data-action="clear">清空</button>
+                </div>
               </div>
-              <span class="heading-icon"
-                ><svg class="icon"><use href="#icon-json" /></svg
-              ></span>
+              <div class="editor-card">
+                <div class="card-header">
+                  <label for="json-input"><span class="field-dot green"></span>JSON 内容</label>
+                  <div class="card-actions">
+                    <button class="copy-button" data-action="copy" disabled>
+                      <svg class="icon"><use href="#icon-copy" /></svg>复制
+                    </button>
+                    <button
+                      type="button"
+                      class="fullscreen-button"
+                      data-fullscreen-target="json-workspace"
+                      aria-controls="json-workspace"
+                    >
+                      <svg class="icon" aria-hidden="true"><use href="#icon-expand" /></svg
+                      ><span data-fullscreen-text>全屏</span>
+                    </button>
+                  </div>
+                </div>
+                <textarea
+                  id="json-input"
+                  data-editor
+                  spellcheck="false"
+                  autocapitalize="off"
+                  autocomplete="off"
+                  placeholder='在这里粘贴 JSON…&#10;&#10;{&#10;  "hello": "world"&#10;}'
+                  aria-describedby="json-status"
+                ></textarea>
+                <div class="card-footer">
+                  <span data-character-count>0 字符</span
+                  ><span>处理后直接替换内容 · 保留数值精度</span>
+                </div>
+              </div>
+              <p class="feedback" id="json-status" data-status role="status" aria-live="polite"></p>
             </div>
-            <div class="toolbar">
-              <div class="toolbar-group">
-                <button class="button primary" data-action="format">
-                  <svg class="icon"><use href="#icon-spark" /></svg>格式化</button
-                ><button class="button" data-action="compact">压缩</button
-                ><button class="button" data-action="escape">转义</button
-                ><button class="button" data-action="unescape">去转义</button
-                ><span class="toolbar-separator"></span
-                ><label class="inline-label" for="json-indent">缩进</label
-                ><select id="json-indent">
-                  <option value="2">2 个空格</option>
-                  <option value="4">4 个空格</option>
-                  <option value="tab">Tab</option>
-                </select>
-              </div>
-              <div class="toolbar-group">
-                <button class="button text-button" data-action="sample">载入示例</button
-                ><button class="button text-button muted" data-action="clear">清空</button>
-              </div>
-            </div>
-            <div class="editor-card">
-              <div class="card-header">
-                <label for="json-input"><span class="field-dot green"></span>JSON 内容</label>
-                <button class="copy-button" data-action="copy" disabled>
-                  <svg class="icon"><use href="#icon-copy" /></svg>复制
-                </button>
-              </div>
-              <textarea
-                id="json-input"
-                data-editor
-                spellcheck="false"
-                autocapitalize="off"
-                autocomplete="off"
-                placeholder='在这里粘贴 JSON…&#10;&#10;{&#10;  "hello": "world"&#10;}'
-                aria-describedby="json-status"
-              ></textarea>
-              <div class="card-footer">
-                <span data-character-count>0 字符</span
-                ><span>处理后直接替换内容 · 保留数值精度</span>
-              </div>
-            </div>
-            <p class="feedback" id="json-status" data-status role="status" aria-live="polite"></p>
-            <div class="note">
-              <span class="note-label">使用提示</span>
+            <details class="note">
+              <summary>使用提示</summary>
               <p>格式化只调整排版，不改变数字、转义或键顺序。支持大整数；不支持注释和尾随逗号。</p>
               <p>
                 转义支持 JSON
                 和普通文本，结果不带外层双引号；去转义兼容带或不带外层双引号的输入，每次只还原一层，不自动格式化。
               </p>
-            </div>
+            </details>
           </section>
 
-          <section id="panel-timestamp" aria-labelledby="timestamp-title" hidden>
-            <div class="page-heading">
-              <div>
-                <div class="eyebrow">02 <span>/</span> TIME &amp; PRECISION</div>
-                <h1 id="timestamp-title">时间戳转换<span class="heading-dot">.</span></h1>
-                <p>从数字到日期，让每一个时间点清晰可读。</p>
-              </div>
-              <span class="heading-icon"
-                ><svg class="icon"><use href="#icon-clock" /></svg
-              ></span>
-            </div>
+          <section id="panel-timestamp" aria-labelledby="breadcrumb-current" hidden>
             <div class="toolbar">
               <div class="toolbar-group">
                 <label class="inline-label" for="time-zone">转换时区</label
@@ -304,194 +334,392 @@
                 </div>
               </div>
             </div>
-            <div class="note">
-              <span class="note-label">精度说明</span>
+            <details class="note">
+              <summary>精度说明</summary>
               <p>
                 秒最多 9 位小数，毫秒最多 6
                 位小数，纳秒为整数。“当前时间”来源精度为毫秒。日期中显式指定的时区优先；本地夏令时重复时间取较早时刻，不存在的时间会报错。
               </p>
-            </div>
+            </details>
           </section>
 
-          <section id="panel-base64" aria-labelledby="base64-title" hidden>
-            <div class="page-heading">
-              <div>
-                <div class="eyebrow">03 <span>/</span> TEXT ENCODING</div>
-                <h1 id="base64-title">Base64 编解码<span class="heading-dot">.</span></h1>
-                <p>文本与编码，自由转换。中文、Emoji，同样轻松。</p>
+          <section
+            id="panel-base64"
+            class="editor-panel"
+            aria-labelledby="breadcrumb-current"
+            hidden
+          >
+            <div class="text-workspace" id="base64-workspace" data-fullscreen-label="Base64 编辑器">
+              <div class="toolbar">
+                <div class="toolbar-group">
+                  <button class="button primary" data-action="encode">
+                    编码<svg class="icon"><use href="#icon-arrow" /></svg></button
+                  ><button class="button" data-action="decode">解码</button
+                  ><span class="toolbar-separator"></span
+                  ><label class="inline-label" for="base64-variant">类型</label
+                  ><select id="base64-variant">
+                    <option value="standard">标准 Base64</option>
+                    <option value="url">Base64URL</option>
+                  </select>
+                </div>
+                <div class="toolbar-group">
+                  <button class="button text-button" data-action="sample">载入示例</button
+                  ><button class="button text-button muted" data-action="clear">清空</button>
+                </div>
               </div>
-              <span class="heading-icon"
-                ><svg class="icon"><use href="#icon-code" /></svg
-              ></span>
+              <div class="editor-card">
+                <div class="card-header">
+                  <label for="base64-input"
+                    ><span class="field-dot green"></span>文本 / Base64 内容</label
+                  >
+                  <div class="card-actions">
+                    <button class="copy-button" data-action="copy" disabled>
+                      <svg class="icon"><use href="#icon-copy" /></svg>复制
+                    </button>
+                    <button
+                      type="button"
+                      class="fullscreen-button"
+                      data-fullscreen-target="base64-workspace"
+                      aria-controls="base64-workspace"
+                    >
+                      <svg class="icon" aria-hidden="true"><use href="#icon-expand" /></svg
+                      ><span data-fullscreen-text>全屏</span>
+                    </button>
+                  </div>
+                </div>
+                <textarea
+                  id="base64-input"
+                  data-editor
+                  spellcheck="false"
+                  autocapitalize="off"
+                  autocomplete="off"
+                  placeholder="输入需要编码的文本，或粘贴 Base64…"
+                  aria-describedby="base64-status"
+                ></textarea>
+                <div class="card-footer">
+                  <span data-character-count>0 字符</span><span>转换后直接替换内容 · UTF-8</span>
+                </div>
+              </div>
+              <p
+                class="feedback"
+                id="base64-status"
+                data-status
+                role="status"
+                aria-live="polite"
+              ></p>
             </div>
-            <div class="toolbar">
-              <div class="toolbar-group">
-                <button class="button primary" data-action="encode">
-                  编码<svg class="icon"><use href="#icon-arrow" /></svg></button
-                ><button class="button" data-action="decode">解码</button
-                ><span class="toolbar-separator"></span
-                ><label class="inline-label" for="base64-variant">类型</label
-                ><select id="base64-variant">
-                  <option value="standard">标准 Base64</option>
-                  <option value="url">Base64URL</option>
-                </select>
-              </div>
-              <div class="toolbar-group">
-                <button class="button text-button" data-action="sample">载入示例</button
-                ><button class="button text-button muted" data-action="clear">清空</button>
-              </div>
-            </div>
-            <div class="editor-card">
-              <div class="card-header">
-                <label for="base64-input"
-                  ><span class="field-dot green"></span>文本 / Base64 内容</label
-                >
-                <button class="copy-button" data-action="copy" disabled>
-                  <svg class="icon"><use href="#icon-copy" /></svg>复制
-                </button>
-              </div>
-              <textarea
-                id="base64-input"
-                data-editor
-                spellcheck="false"
-                autocapitalize="off"
-                autocomplete="off"
-                placeholder="输入需要编码的文本，或粘贴 Base64…"
-                aria-describedby="base64-status"
-              ></textarea>
-              <div class="card-footer">
-                <span data-character-count>0 字符</span><span>转换后直接替换内容 · UTF-8</span>
-              </div>
-            </div>
-            <p class="feedback" id="base64-status" data-status role="status" aria-live="polite"></p>
-            <div class="note">
-              <span class="note-label">编码说明</span>
+            <details class="note">
+              <summary>编码说明</summary>
               <p>
                 标准 Base64 使用 + / 和 = 填充；Base64URL 使用 -
                 _，编码时省略填充。解码支持空白与合法省略填充，结果须为 UTF-8 文本。
               </p>
-            </div>
+            </details>
           </section>
-          <section id="panel-diff" aria-labelledby="diff-title" hidden>
-            <div class="page-heading">
-              <div>
-                <div class="eyebrow">04 <span>/</span> TEXT COMPARISON</div>
-                <h1 id="diff-title">文本对比<span class="heading-dot">.</span></h1>
-                <p>并排看见变化，从整行到字符，让差异一目了然。</p>
-              </div>
-              <span class="heading-icon"
-                ><svg class="icon"><use href="#icon-diff" /></svg
-              ></span>
-            </div>
-            <div class="toolbar diff-toolbar">
-              <div class="toolbar-group diff-options">
-                <label class="diff-option"
-                  ><input id="diff-ignore-whitespace" type="checkbox" />忽略空白</label
-                >
-                <label class="diff-option"
-                  ><input id="diff-ignore-case" type="checkbox" />忽略大小写</label
-                >
-              </div>
-              <div class="toolbar-group">
-                <button class="button" data-action="swap">交换两侧</button>
-                <button class="button text-button" data-action="sample">载入示例</button>
-                <button class="button text-button muted" data-action="clear">清空</button>
-              </div>
-            </div>
-            <div class="diff-editors">
-              <div class="editor-card diff-source">
-                <div class="card-header">
-                  <label for="diff-left"><span class="field-dot"></span>原文</label
-                  ><span class="code-label">ORIGINAL</span>
-                </div>
-                <textarea
-                  id="diff-left"
-                  spellcheck="false"
-                  autocapitalize="off"
-                  autocomplete="off"
-                  placeholder="在这里粘贴原文…"
-                  aria-describedby="diff-help diff-status"
-                ></textarea>
-                <div class="card-footer">
-                  <span id="diff-left-count">0 字符</span><span>修改前的内容</span>
-                </div>
-              </div>
-              <div class="editor-card diff-source">
-                <div class="card-header">
-                  <label for="diff-right"><span class="field-dot green"></span>新文本</label
-                  ><span class="code-label">UPDATED</span>
-                </div>
-                <textarea
-                  id="diff-right"
-                  spellcheck="false"
-                  autocapitalize="off"
-                  autocomplete="off"
-                  placeholder="在这里粘贴新文本，自动查看差异…"
-                  aria-describedby="diff-help diff-status"
-                ></textarea>
-                <div class="card-footer">
-                  <span id="diff-right-count">0 字符</span><span>修改后的内容</span>
-                </div>
-              </div>
-            </div>
-            <p class="feedback" id="diff-status" role="status" aria-live="polite"></p>
-            <div class="diff-results" id="diff-results" aria-busy="false">
-              <div class="card-header diff-result-heading">
-                <h2 id="diff-result-title">对比结果</h2>
-                <div class="diff-stats" id="diff-stats" hidden>
-                  <span class="diff-stat-added">+ 新增 <strong id="diff-added">0</strong></span>
-                  <span class="diff-stat-removed">− 删除 <strong id="diff-removed">0</strong></span>
-                  <span class="diff-stat-modified"
-                    >~ 修改 <strong id="diff-modified">0</strong></span
+          <section id="panel-diff" class="editor-panel" aria-labelledby="breadcrumb-current" hidden>
+            <div class="diff-workspace" id="diff-workspace" data-fullscreen-label="文本对比工作区">
+              <div class="toolbar diff-toolbar">
+                <div class="toolbar-group diff-options">
+                  <label class="diff-option"
+                    ><input id="diff-ignore-whitespace" type="checkbox" />忽略空白</label
+                  >
+                  <label class="diff-option"
+                    ><input id="diff-ignore-case" type="checkbox" />忽略大小写</label
                   >
                 </div>
+                <div class="toolbar-group">
+                  <button class="button" data-action="swap">交换两侧</button>
+                  <button class="button text-button" data-action="sample">载入示例</button>
+                  <button class="button text-button muted" data-action="clear">清空</button>
+                  <button
+                    type="button"
+                    class="button fullscreen-button"
+                    data-fullscreen-target="diff-workspace"
+                    aria-controls="diff-workspace"
+                  >
+                    <svg class="icon" aria-hidden="true"><use href="#icon-expand" /></svg
+                    ><span data-fullscreen-text>工作区全屏</span>
+                  </button>
+                </div>
               </div>
-              <div class="diff-placeholder" id="diff-placeholder">
-                在上方输入两份文本，差异会自动显示在这里。
+              <div class="diff-editors">
+                <div
+                  class="editor-card diff-source"
+                  id="diff-left-card"
+                  data-fullscreen-label="原文编辑器"
+                >
+                  <div class="card-header">
+                    <label for="diff-left"><span class="field-dot"></span>原文</label>
+                    <div class="card-actions">
+                      <span class="code-label">ORIGINAL</span>
+                      <button
+                        type="button"
+                        class="fullscreen-button"
+                        data-fullscreen-target="diff-left-card"
+                        aria-controls="diff-left-card"
+                      >
+                        <svg class="icon" aria-hidden="true"><use href="#icon-expand" /></svg
+                        ><span data-fullscreen-text>全屏</span>
+                      </button>
+                    </div>
+                  </div>
+                  <textarea
+                    id="diff-left"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    autocomplete="off"
+                    placeholder="在这里粘贴原文…"
+                    aria-describedby="diff-help diff-status"
+                  ></textarea>
+                  <div class="card-footer">
+                    <span id="diff-left-count">0 字符</span><span>修改前的内容</span>
+                  </div>
+                </div>
+                <div
+                  class="editor-card diff-source"
+                  id="diff-right-card"
+                  data-fullscreen-label="新文本编辑器"
+                >
+                  <div class="card-header">
+                    <label for="diff-right"><span class="field-dot green"></span>新文本</label>
+                    <div class="card-actions">
+                      <span class="code-label">UPDATED</span>
+                      <button
+                        type="button"
+                        class="fullscreen-button"
+                        data-fullscreen-target="diff-right-card"
+                        aria-controls="diff-right-card"
+                      >
+                        <svg class="icon" aria-hidden="true"><use href="#icon-expand" /></svg
+                        ><span data-fullscreen-text>全屏</span>
+                      </button>
+                    </div>
+                  </div>
+                  <textarea
+                    id="diff-right"
+                    spellcheck="false"
+                    autocapitalize="off"
+                    autocomplete="off"
+                    placeholder="在这里粘贴新文本，自动查看差异…"
+                    aria-describedby="diff-help diff-status"
+                  ></textarea>
+                  <div class="card-footer">
+                    <span id="diff-right-count">0 字符</span><span>修改后的内容</span>
+                  </div>
+                </div>
               </div>
-              <div
-                class="diff-viewport"
-                id="diff-viewport"
-                tabindex="0"
-                role="region"
-                aria-labelledby="diff-result-title"
-                hidden
-              >
-                <table class="diff-table" aria-label="原文与新文本逐行对照">
-                  <colgroup>
-                    <col class="diff-number-column" />
-                    <col class="diff-marker-column" />
-                    <col />
-                    <col class="diff-number-column" />
-                    <col class="diff-marker-column" />
-                    <col />
-                  </colgroup>
-                  <thead>
-                    <tr>
-                      <th colspan="3" scope="colgroup">原文 <span>ORIGINAL</span></th>
-                      <th colspan="3" scope="colgroup">新文本 <span>UPDATED</span></th>
-                    </tr>
-                  </thead>
-                  <tbody id="diff-rows"></tbody>
-                </table>
+              <p class="feedback" id="diff-status" role="status" aria-live="polite"></p>
+              <div class="diff-results" id="diff-results" aria-busy="false">
+                <div class="card-header diff-result-heading">
+                  <h2 id="diff-result-title">对比结果</h2>
+                  <div class="diff-stats" id="diff-stats" hidden>
+                    <span class="diff-stat-added">+ 新增 <strong id="diff-added">0</strong></span>
+                    <span class="diff-stat-removed"
+                      >− 删除 <strong id="diff-removed">0</strong></span
+                    >
+                    <span class="diff-stat-modified"
+                      >~ 修改 <strong id="diff-modified">0</strong></span
+                    >
+                  </div>
+                </div>
+                <div class="diff-placeholder" id="diff-placeholder">
+                  在上方输入两份文本，差异会自动显示在这里。
+                </div>
+                <div
+                  class="diff-viewport"
+                  id="diff-viewport"
+                  data-fullscreen-scroll
+                  tabindex="0"
+                  role="region"
+                  aria-labelledby="diff-result-title"
+                  hidden
+                >
+                  <table class="diff-table" aria-label="原文与新文本逐行对照">
+                    <colgroup>
+                      <col class="diff-number-column" />
+                      <col class="diff-marker-column" />
+                      <col />
+                      <col class="diff-number-column" />
+                      <col class="diff-marker-column" />
+                      <col />
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th colspan="3" scope="colgroup">原文 <span>ORIGINAL</span></th>
+                        <th colspan="3" scope="colgroup">新文本 <span>UPDATED</span></th>
+                      </tr>
+                    </thead>
+                    <tbody id="diff-rows"></tbody>
+                  </table>
+                </div>
               </div>
             </div>
-            <div class="note" id="diff-help">
-              <span class="note-label">比较规则</span>
-              <p>
+            <details class="note">
+              <summary>比较规则</summary>
+              <p id="diff-help">
                 停止输入后自动对比。忽略空白只作用于行内，空行及末尾换行仍参与比较。每侧最多 20
                 万字符、5,000 行；复杂文本可缩小范围后重试。
               </p>
+            </details>
+          </section>
+          <section
+            id="panel-unicode"
+            class="editor-panel"
+            aria-labelledby="breadcrumb-current"
+            hidden
+          >
+            <div
+              class="text-workspace"
+              id="unicode-workspace"
+              data-fullscreen-label="Unicode 编辑器"
+            >
+              <div class="toolbar">
+                <div class="toolbar-group">
+                  <button class="button primary" data-action="encode">
+                    编码<svg class="icon"><use href="#icon-arrow" /></svg></button
+                  ><button class="button" data-action="decode">解码</button
+                  ><span class="toolbar-separator"></span
+                  ><label class="inline-label" for="unicode-scope">编码范围</label
+                  ><select id="unicode-scope">
+                    <option value="all">全部编码</option>
+                    <option value="preserve-ascii">保留可打印 ASCII</option>
+                  </select>
+                </div>
+                <div class="toolbar-group">
+                  <button class="button text-button" data-action="sample">载入示例</button
+                  ><button class="button text-button muted" data-action="clear">清空</button>
+                </div>
+              </div>
+              <div class="editor-card">
+                <div class="card-header">
+                  <label for="unicode-input"
+                    ><span class="field-dot green"></span>文本 / Unicode 转义</label
+                  >
+                  <div class="card-actions">
+                    <button class="copy-button" data-action="copy" disabled>
+                      <svg class="icon"><use href="#icon-copy" /></svg>复制
+                    </button>
+                    <button
+                      type="button"
+                      class="fullscreen-button"
+                      data-fullscreen-target="unicode-workspace"
+                      aria-controls="unicode-workspace"
+                    >
+                      <svg class="icon" aria-hidden="true"><use href="#icon-expand" /></svg
+                      ><span data-fullscreen-text>全屏</span>
+                    </button>
+                  </div>
+                </div>
+                <textarea
+                  id="unicode-input"
+                  data-editor
+                  spellcheck="false"
+                  autocapitalize="off"
+                  autocomplete="off"
+                  placeholder="输入需要编码的文本，或粘贴 Unicode 转义，如 \u4f60\u597d…"
+                  aria-describedby="unicode-status"
+                ></textarea>
+                <div class="card-footer">
+                  <span data-character-count>0 字符</span><span>转换后直接替换内容 · 单层解码</span>
+                </div>
+              </div>
+              <p
+                class="feedback"
+                id="unicode-status"
+                data-status
+                role="status"
+                aria-live="polite"
+              ></p>
             </div>
+            <details class="note">
+              <summary>编码说明</summary>
+              <p>
+                编码使用四位、小写十六进制的 \uXXXX，Emoji 编码为两个转义。默认全部编码；保留可打印
+                ASCII 时，反斜杠仍编码为
+                \u005c，换行和制表符等控制字符也会编码。编码范围仅影响编码。
+              </p>
+              <p>
+                解码只识别小写 \u
+                后的四位十六进制数字，接受数字中的大小写字母，每次只还原一层。普通文字、外围引号和
+                \n
+                等其他转义保持原样，不裁剪空白。空输入合法；不完整转义、非法数字或孤立代理项会报错并保留原文。不支持
+                \u{...}、HTML 实体或 UTF-8 字节编码。
+              </p>
+            </details>
+          </section>
+          <section id="panel-pdf" class="editor-panel" aria-labelledby="breadcrumb-current" hidden>
+            <div class="editor-card pdf-card">
+              <div class="card-header">
+                <span><span class="field-dot green"></span>PDF 分割</span
+                ><span>本地处理 · 无需上传</span>
+              </div>
+              <div class="pdf-body">
+                <div id="pdf-drop" class="pdf-drop">
+                  <label for="pdf-file">选择 PDF 或将文件拖到这里</label>
+                  <input
+                    id="pdf-file"
+                    type="file"
+                    accept=".pdf,application/pdf"
+                    aria-describedby="pdf-info"
+                  />
+                  <p id="pdf-info">尚未选择文件</p>
+                </div>
+                <div class="pdf-options">
+                  <label
+                    >分割方式<select id="pdf-mode">
+                      <option value="pages">每页一份</option>
+                      <option value="count">每 N 页一份</option>
+                      <option value="ranges">自定义范围</option>
+                      <option value="size">按大小</option>
+                    </select></label
+                  >
+                  <label id="pdf-count-field" hidden
+                    >每份页数<input id="pdf-count" type="text" inputmode="numeric" value="10"
+                  /></label>
+                  <label id="pdf-ranges-field" hidden
+                    >页面范围<input
+                      id="pdf-ranges"
+                      type="text"
+                      placeholder="1-3,4-6,7"
+                      aria-describedby="pdf-range-help"
+                  /></label>
+                  <label id="pdf-size-field" hidden
+                    >每份最多（MB）<input
+                      id="pdf-size"
+                      type="text"
+                      inputmode="decimal"
+                      value="10"
+                      aria-describedby="pdf-size-help"
+                  /></label>
+                </div>
+                <div class="toolbar-group pdf-actions">
+                  <button class="button primary" id="pdf-start" disabled>分割并下载 ZIP</button
+                  ><button class="button" id="pdf-cancel" hidden>取消</button
+                  ><button class="button text-button muted" id="pdf-clear">清空</button
+                  ><a class="button" id="pdf-download" hidden>再次下载 ZIP</a>
+                </div>
+                <progress id="pdf-progress" aria-label="PDF 处理进度" hidden></progress>
+                <p class="feedback" id="pdf-status" role="status" aria-live="polite"></p>
+                <div id="pdf-results" class="pdf-results"></div>
+              </div>
+            </div>
+            <details class="note">
+              <summary>分割说明</summary>
+              <p id="pdf-range-help">
+                范围从第 1
+                页开始，支持中英文逗号。按输入顺序输出，允许不同段重复包含页面；未指定的页不导出。
+              </p>
+              <p id="pdf-size-help">
+                1 MB = 1,000,000 字节，最多两位小数。大小限制针对每份 PDF
+                的实际字节数。任何单页超过上限会停止整个任务，请提高上限后重试。
+              </p>
+              <p>
+                保留页面内容与图片清晰度，不提供解密、压缩或
+                OCR。不承诺保留文档级书签、交互表单及数字签名有效性。大文件需要较多内存，处理期间可取消；切换工具不影响任务，刷新会清空结果。
+              </p>
+            </details>
           </section>
         </main>
-        <footer class="main-footer">
-          <span>小工具，少一点繁琐。</span
-          ><span
-            >浏览器本地处理 <span class="footer-divider">·</span> 零上传
-            <span class="footer-divider">·</span> 即开即用</span
-          >
-        </footer>
       </div>
     </div>
     <noscript>请启用 JavaScript 后使用工具。所有转换均在浏览器本地完成。</noscript>

@@ -11,6 +11,16 @@ describe("standalone build", () => {
     expect(html).toContain("JSON 工具");
     expect(html).toContain("文本对比");
     expect(html).toContain('href="#diff"');
+    expect(html).toContain("Unicode 编解码");
+    expect(html).toContain('href="#unicode"');
+    expect(html).toContain('id="panel-unicode"');
+    expect(html).toContain('id="icon-unicode"');
+    expect(html).toContain('id="unicode-scope"');
+    expect(html).toContain('href="#pdf"');
+    expect(html).toContain('id="panel-pdf"');
+    expect(html).toContain('id="pdf-size"');
+    expect(html).not.toContain("__PDF_WORKER_SOURCE__");
+    expect(html).toContain('data-fullscreen-target="unicode-workspace"');
     expect(html).not.toContain("<!-- APP_");
     expect(html.match(/<script>/g)?.length).toBe(1);
     expect(html.match(/<style>/g)?.length).toBe(1);

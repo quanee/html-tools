@@ -27,6 +27,13 @@
     font-size: 14px;
     -webkit-font-smoothing: antialiased;
   }
+  html {
+    scrollbar-gutter: stable;
+  }
+  html.fullscreen-open,
+  .fullscreen-open body {
+    overflow: hidden;
+  }
   [hidden] {
     display: none !important;
   }
@@ -138,13 +145,13 @@
 @layer layout {
   .app-shell {
     display: grid;
-    grid-template-columns: 236px minmax(0, 1fr);
+    grid-template-columns: 196px minmax(0, 1fr);
     min-height: 100vh;
   }
   .sidebar {
     background: #fcfdfc;
     border-right: 1px solid var(--line);
-    padding: 34px 20px 23px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     min-width: 0;
@@ -152,17 +159,17 @@
   .brand {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 0 12px;
+    gap: 8px;
+    padding: 0 4px;
   }
   .brand-mark {
     display: grid;
     place-items: center;
     background: var(--green);
     color: white;
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
     box-shadow: 0 3px 8px #176b5215;
   }
   .brand-mark .icon {
@@ -171,7 +178,7 @@
   }
   .brand strong {
     display: block;
-    font-size: 24px;
+    font-size: 21px;
     letter-spacing: 1px;
     line-height: 1.25;
   }
@@ -188,10 +195,10 @@
   .nav-label {
     display: flex;
     justify-content: space-between;
-    padding: 0 13px;
+    padding: 0 8px;
     color: var(--subtle);
     font-size: 11px;
-    margin: 55px 0 16px;
+    margin: 24px 0 8px;
     letter-spacing: 1px;
   }
   .nav-label span {
@@ -201,13 +208,13 @@
   .tool-nav {
     display: flex;
     flex-direction: column;
-    gap: 9px;
+    gap: 4px;
   }
   .tool-nav a {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 13px;
+    gap: 8px;
+    padding: 10px 8px;
     border-radius: 8px;
     color: #6c7872;
     transition: background 0.15s;
@@ -227,7 +234,7 @@
   }
   .sidebar-bottom {
     margin-top: auto;
-    padding: 60px 12px 0;
+    padding: 24px 4px 0;
   }
   .privacy-mark {
     display: flex;
@@ -244,13 +251,13 @@
     color: var(--subtle);
     font-size: 11px;
     line-height: 1.95;
-    margin: 10px 0 25px;
+    margin: 8px 0 12px;
   }
   .version {
     display: flex;
     align-items: center;
     gap: 7px;
-    padding-top: 18px;
+    padding-top: 12px;
     border-top: 1px solid var(--line);
     color: var(--muted);
     font-size: 10px;
@@ -265,8 +272,9 @@
     min-width: 0;
   }
   .topbar {
-    min-height: 73px;
-    padding: 0 42px;
+    min-height: 52px;
+    flex-shrink: 0;
+    padding: 0 16px;
     border-bottom: 1px solid var(--line);
     display: flex;
     justify-content: space-between;
@@ -275,7 +283,9 @@
   }
   .breadcrumb {
     display: flex;
-    gap: 16px;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
     font-size: 12px;
     color: var(--muted);
   }
@@ -284,84 +294,180 @@
   }
   #breadcrumb-current {
     color: #44574c;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.5;
   }
   #workspace {
     width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 43px 42px 35px;
-  }
-  .page-heading {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 34px;
-  }
-  .eyebrow {
-    font: 10px var(--mono);
-    color: #7d8e84;
-    letter-spacing: 1.5px;
-    margin-bottom: 13px;
-  }
-  .eyebrow span {
-    margin: 0 7px;
-    color: #b4beb8;
-  }
-  h1 {
-    font-size: 32px;
-    font-weight: 650;
-    letter-spacing: -0.8px;
-    line-height: 1.45;
-  }
-  .heading-dot {
-    color: var(--green);
-    margin-left: 3px;
-  }
-  .page-heading p {
-    margin-top: 10px;
-    color: var(--muted);
-    font-size: 13px;
-    line-height: 1.75;
-  }
-  .heading-icon {
-    border: 1px solid #dce7df;
-    color: #557e68;
-    display: grid;
-    place-items: center;
-    width: 65px;
-    height: 65px;
-    border-radius: 18px;
-    background: #f0f5f0;
-    transform: rotate(-6deg);
-    margin-right: 6px;
-  }
-  .heading-icon .icon {
-    width: 31px;
-    height: 31px;
+    padding: 12px 16px;
   }
   .time-grid,
   .diff-editors {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 20px;
-  }
-  .main-footer {
-    margin-top: auto;
-    display: flex;
-    justify-content: space-between;
-    gap: 14px;
-    padding: 22px 42px;
-    color: var(--subtle);
-    font-size: 11px;
-    border-top: 1px solid var(--line);
-  }
-  .footer-divider {
-    margin: 0 8px;
-    color: #b5beb8;
+    gap: 12px;
   }
 }
 
 @layer components {
+  .topbar-start,
+  .card-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+  .topbar {
+    gap: 12px;
+  }
+  .card-actions {
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  .sidebar-toggle,
+  .fullscreen-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+    border: 0;
+    border-radius: 7px;
+    color: #5c7164;
+    background: transparent;
+    font-size: 11px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .fullscreen-button .icon {
+    width: 16px;
+    height: 16px;
+  }
+  .sidebar-toggle:hover,
+  .fullscreen-button:hover:not(:disabled) {
+    color: var(--green);
+    background: var(--green-pale);
+  }
+  .sidebar-toggle:active,
+  .fullscreen-button:active:not(:disabled) {
+    background: #dcebe1;
+  }
+  .fullscreen-button[aria-pressed="true"] {
+    display: none;
+  }
+  .sidebar-collapsed .sidebar-toggle .icon {
+    transform: rotate(180deg);
+  }
+  .tool-nav a {
+    min-height: 44px;
+  }
+  .sidebar-collapsed .brand-text,
+  .sidebar-collapsed .nav-label,
+  .sidebar-collapsed .tool-nav a > span,
+  .sidebar-collapsed .sidebar-bottom {
+    display: none;
+  }
+  .fullscreen-host:not(.fullscreen-dialog),
+  .fullscreen-host:not(.fullscreen-dialog) > .fullscreen-body {
+    display: contents;
+    color: inherit;
+  }
+  .fullscreen-dialog {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100vh;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: var(--canvas);
+    color: var(--ink);
+    overflow: hidden;
+  }
+  .fullscreen-dialog[open] {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .fullscreen-dialog::backdrop {
+    background: var(--canvas);
+  }
+  .fullscreen-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 52px;
+    padding: 3px 12px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface);
+  }
+  .fullscreen-header strong {
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .fullscreen-exit {
+    min-height: 44px;
+    flex-shrink: 0;
+  }
+  .fullscreen-body {
+    min-height: 0;
+    min-width: 0;
+    padding: 12px;
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+  .text-workspace.is-fullscreen,
+  .editor-card.is-fullscreen {
+    height: 100%;
+    min-height: min-content;
+    display: flex;
+    flex-direction: column;
+  }
+  .editor-card.is-fullscreen {
+    min-height: 210px;
+  }
+  .text-workspace.is-fullscreen > .editor-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    min-height: 210px;
+  }
+  .is-fullscreen .card-header,
+  .is-fullscreen .card-footer,
+  .is-fullscreen > .toolbar,
+  .is-fullscreen > .feedback {
+    flex-shrink: 0;
+  }
+  .diff-workspace.is-fullscreen {
+    height: 100%;
+    min-height: min-content;
+    display: flex;
+    flex-direction: column;
+  }
+  .diff-workspace.is-fullscreen .diff-editors {
+    flex-shrink: 0;
+  }
+  .diff-workspace.is-fullscreen .diff-results {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    min-height: 180px;
+  }
+  .diff-workspace.is-fullscreen .diff-viewport {
+    height: 0;
+    min-height: 132px;
+    max-height: none;
+    flex: 1 0 auto;
+  }
+  .diff-workspace.is-fullscreen .diff-placeholder {
+    margin: auto;
+  }
   .status-dot {
     width: 6px;
     height: 6px;
@@ -384,21 +490,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 16px;
+    gap: 8px;
     flex-wrap: wrap;
-    margin-bottom: 18px;
+    margin-bottom: 8px;
   }
   .toolbar-group {
     display: flex;
     align-items: center;
-    gap: 9px;
+    gap: 8px;
     flex-wrap: wrap;
   }
   .toolbar-separator {
     height: 20px;
     width: 1px;
     background: var(--line);
-    margin: 0 7px;
+    margin: 0 4px;
   }
   .inline-label {
     font-size: 12px;
@@ -470,9 +576,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    min-height: 55px;
-    padding: 12px 19px;
-    gap: 10px;
+    min-height: 44px;
+    padding: 0 12px;
+    gap: 8px;
     border-bottom: 1px solid #eaf0ec;
   }
   .card-header label {
@@ -499,17 +605,17 @@
   .editor-card textarea {
     display: block;
     width: 100%;
-    height: 354px;
-    min-height: 200px;
-    padding: 21px;
+    height: 280px;
+    min-height: 280px;
+    padding: 12px;
     border: 0;
     background: transparent;
     font-size: 13px;
   }
   .card-footer {
     border-top: 1px solid #edf1ee;
-    padding: 11px 19px;
-    min-height: 37px;
+    padding: 4px 12px;
+    min-height: 24px;
     display: flex;
     justify-content: space-between;
     gap: 10px;
@@ -544,31 +650,41 @@
   .feedback {
     font-size: 12px;
     color: var(--green);
-    min-height: 40px;
-    padding: 12px 2px 8px;
+    padding: 8px 2px;
     line-height: 1.7;
     overflow-wrap: anywhere;
   }
   .feedback.is-error {
     color: var(--error);
   }
+  .feedback:empty {
+    padding: 0;
+  }
   .note {
-    display: flex;
-    align-items: baseline;
-    gap: 16px;
+    flex-shrink: 0;
     margin-top: 8px;
-    padding: 17px 19px;
     background: #eff3f1;
     border: 1px solid #e7ece8;
     border-radius: 8px;
     color: #75847a;
     font-size: 11px;
     line-height: 1.85;
+    overflow-wrap: anywhere;
   }
-  .note-label {
-    flex-shrink: 0;
+  .note summary {
+    min-height: 36px;
+    padding: 7px 12px;
     color: #546c5c;
     font-weight: 600;
+    cursor: pointer;
+    outline-offset: -3px;
+    border-radius: 7px;
+  }
+  .note summary:hover {
+    background: #e7eeea;
+  }
+  .note p {
+    padding: 0 12px 10px;
   }
   .precision-label {
     font: 11px var(--mono);
@@ -587,7 +703,7 @@
     color: #8ba092;
   }
   .time-card-body {
-    padding: 20px;
+    padding: 12px;
   }
   .field-heading {
     display: flex;
@@ -624,12 +740,12 @@
   }
   .action-row {
     display: flex;
-    gap: 12px;
+    gap: 8px;
     align-items: center;
-    margin: 21px 0 25px;
+    margin: 12px 0;
   }
   .time-result {
-    padding: 15px;
+    padding: 12px;
     border: 1px solid var(--line);
     border-radius: 8px;
     background: #f8faf8;
@@ -651,7 +767,7 @@
   .timestamp-results {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 8px;
   }
   .result-row {
     background: #f8faf8;
@@ -685,11 +801,8 @@
     flex-shrink: 0;
     width: 28px;
   }
-  .time-grid + .note {
-    margin-top: 24px;
-  }
   .diff-options {
-    gap: 20px;
+    gap: 12px;
   }
   .diff-option {
     display: inline-flex;
@@ -709,15 +822,17 @@
     accent-color: var(--green);
   }
   .diff-source textarea {
-    height: 200px;
-    min-height: 140px;
+    height: clamp(200px, 32vh, 380px);
+    height: clamp(200px, 32dvh, 380px);
+    min-height: 200px;
   }
   .diff-results {
     background: var(--surface);
     border: 1px solid var(--line);
     border-radius: var(--radius);
     overflow: hidden;
-    margin-bottom: 20px;
+    margin-top: 8px;
+    min-width: 0;
   }
   .diff-result-heading {
     flex-wrap: wrap;
@@ -750,7 +865,7 @@
     background: #f8f1df;
   }
   .diff-placeholder {
-    padding: 48px 20px;
+    padding: 32px 12px;
     color: var(--muted);
     font-size: 12px;
     text-align: center;
@@ -850,33 +965,83 @@
 }
 
 @layer responsive {
-  @media (min-width: 1600px) {
-    #workspace {
-      padding-top: 58px;
+  @media (min-width: 821px) {
+    .app-shell.sidebar-collapsed {
+      grid-template-columns: 72px minmax(0, 1fr);
     }
-    .editor-card textarea {
-      height: 430px;
+    .sidebar-collapsed .sidebar {
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+    .sidebar-collapsed .brand {
+      padding: 0;
+      justify-content: center;
+    }
+    .sidebar-collapsed .tool-nav {
+      margin-top: 24px;
+    }
+    .sidebar-collapsed .tool-nav a {
+      padding: 0;
+      justify-content: center;
+    }
+  }
+  /* Keep the document scrollable when minimum editor sizes or expanded help
+     exceed the viewport. The textareas and diff results scroll independently. */
+  @media (min-width: 821px) and (min-height: 640px) {
+    .main-shell {
+      height: 100vh;
+      height: 100dvh;
+    }
+    #workspace {
+      flex: 1;
+      min-height: 0;
+    }
+    .editor-panel {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .text-workspace:not(.is-fullscreen),
+    .diff-workspace:not(.is-fullscreen) {
+      display: flex;
+      flex-direction: column;
+      flex: 1 0 auto;
+    }
+    .text-workspace:not(.is-fullscreen) > .editor-card {
+      display: flex;
+      flex-direction: column;
+      flex: 1 0 auto;
+    }
+    .text-workspace:not(.is-fullscreen) > .editor-card > textarea {
+      height: 0;
+      min-height: 240px;
+      flex: 1 0 auto;
+      resize: none;
+    }
+    .editor-panel .toolbar,
+    .editor-panel .card-header,
+    .editor-panel .card-footer,
+    .editor-panel .feedback,
+    .diff-editors {
+      flex-shrink: 0;
+    }
+    .diff-workspace:not(.is-fullscreen) .diff-results {
+      display: flex;
+      flex-direction: column;
+      min-height: 180px;
+      flex: 1 0 auto;
+    }
+    .diff-workspace:not(.is-fullscreen) .diff-viewport {
+      height: 0;
+      min-height: 132px;
+      max-height: none;
+      flex: 1 0 auto;
+    }
+    .diff-workspace:not(.is-fullscreen) .diff-placeholder {
+      margin: auto;
     }
   }
   @media (max-width: 1150px) {
-    .app-shell {
-      grid-template-columns: 210px minmax(0, 1fr);
-    }
-    .sidebar {
-      padding-left: 12px;
-      padding-right: 12px;
-    }
-    #workspace {
-      padding: 30px 26px;
-    }
-    .topbar,
-    .main-footer {
-      padding-left: 26px;
-      padding-right: 26px;
-    }
-    .toolbar-separator {
-      margin: 0 2px;
-    }
     .time-grid {
       grid-template-columns: 1fr;
     }
@@ -888,41 +1053,22 @@
     .sidebar {
       border-right: 0;
       border-bottom: 1px solid var(--line);
-      padding: 17px 22px 12px;
+      padding: 4px 12px;
     }
-    .brand {
-      padding: 0;
-      gap: 10px;
-    }
-    .brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 9px;
-    }
-    .brand-mark .icon {
-      width: 22px;
-      height: 22px;
-    }
-    .brand strong {
-      font-size: 21px;
-    }
-    .brand-subtitle {
-      display: none;
-    }
+    .brand,
     .nav-label,
     .sidebar-bottom {
       display: none;
     }
     .tool-nav {
       flex-direction: row;
-      gap: 5px;
-      margin-top: 18px;
+      gap: 4px;
       overflow-x: auto;
     }
     .tool-nav a {
       flex: 1 0 auto;
       justify-content: center;
-      padding: 11px 8px;
+      padding: 10px 8px;
       gap: 7px;
       font-size: 12px;
       white-space: nowrap;
@@ -935,65 +1081,16 @@
       display: none;
     }
     .topbar {
-      min-height: 54px;
-    }
-    .main-shell {
-      min-height: calc(100vh - 130px);
+      padding: 0 12px;
     }
     #workspace {
-      padding: 29px 24px;
+      padding: 8px 12px;
     }
-    .page-heading {
-      margin-bottom: 25px;
-    }
-    h1 {
-      font-size: 29px;
-    }
-    .heading-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-    }
-    .heading-icon .icon {
-      width: 27px;
-      height: 27px;
+    .diff-editors {
+      grid-template-columns: 1fr;
     }
   }
   @media (max-width: 600px) {
-    .diff-editors {
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-    .diff-editors .diff-source textarea {
-      height: 180px;
-    }
-    .diff-result-heading {
-      gap: 12px;
-    }
-    .sidebar {
-      padding: 15px 16px 10px;
-    }
-    #workspace {
-      padding: 25px 16px;
-    }
-    .topbar {
-      padding: 0 17px;
-    }
-    .page-heading p {
-      font-size: 12px;
-    }
-    .eyebrow {
-      font-size: 9px;
-    }
-    .heading-icon {
-      display: none;
-    }
-    h1 {
-      font-size: 28px;
-    }
-    .toolbar {
-      gap: 7px;
-    }
     .toolbar-group {
       gap: 6px;
     }
@@ -1008,39 +1105,35 @@
       padding-right: 20px;
       font-size: 12px;
     }
-    .editor-card textarea {
-      height: 240px;
-      padding: 16px;
-    }
-    .card-header {
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-    .card-footer {
-      padding-left: 16px;
-      padding-right: 16px;
-    }
-    .note {
-      display: block;
-      padding: 14px 16px;
-    }
-    .note-label {
-      display: block;
-      margin-bottom: 4px;
-    }
-    .main-footer {
-      flex-direction: column;
-      align-items: center;
-      padding: 18px 16px;
-      gap: 7px;
-      font-size: 10px;
-    }
-    .time-card-body {
-      padding: 16px;
-    }
     .precision-label {
       font-size: 10px;
-      padding: 8px 0;
+    }
+    .topbar,
+    .topbar-start,
+    .breadcrumb {
+      gap: 8px;
+    }
+    .breadcrumb > span {
+      display: none;
+    }
+    .local-badge {
+      white-space: nowrap;
+      padding: 6px;
+      flex-shrink: 0;
+    }
+    .card-header {
+      flex-wrap: wrap;
+    }
+    .card-actions {
+      margin-left: auto;
+    }
+    .card-footer {
+      flex-wrap: wrap;
+    }
+    .note summary {
+      min-height: 44px;
+      padding-top: 11px;
+      padding-bottom: 11px;
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1050,5 +1143,100 @@
       transition: none !important;
       scroll-behavior: auto !important;
     }
+  }
+  .fullscreen-dialog textarea {
+    resize: none;
+  }
+  .fullscreen-dialog .diff-editors textarea {
+    height: clamp(200px, 32vh, 380px);
+    height: clamp(200px, 32dvh, 380px);
+  }
+  .text-workspace.is-fullscreen > .editor-card > textarea,
+  .editor-card.is-fullscreen > textarea {
+    height: 0;
+    min-height: 140px;
+    flex: 1 0 auto;
+  }
+}
+
+/* PDF jobs retain their state when navigating between tools. */
+.pdf-body {
+  padding: 20px;
+}
+.pdf-drop {
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  padding: 20px;
+  background: var(--surface);
+}
+.pdf-drop label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.pdf-drop input {
+  max-width: 100%;
+}
+.pdf-drop p,
+.pdf-results {
+  overflow-wrap: anywhere;
+}
+.pdf-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 20px 0;
+}
+.pdf-options label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 180px;
+  min-width: 0;
+}
+.pdf-options input,
+.pdf-options select {
+  width: 100%;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font: inherit;
+  background: white;
+  color: inherit;
+}
+.pdf-actions {
+  flex-wrap: wrap;
+}
+.pdf-actions a {
+  text-decoration: none;
+}
+.pdf-body progress {
+  width: 100%;
+  margin-top: 18px;
+  accent-color: #166b54;
+}
+.pdf-results ol {
+  max-height: 320px;
+  overflow: auto;
+  padding-left: 24px;
+}
+.pdf-results li {
+  padding: 6px 0;
+}
+.pdf-options [hidden],
+.pdf-body [hidden] {
+  display: none;
+}
+@media (max-width: 600px) {
+  .pdf-body,
+  .pdf-drop {
+    padding: 12px;
+  }
+  .pdf-options {
+    flex-direction: column;
+  }
+  .pdf-options label {
+    flex: auto;
   }
 }
